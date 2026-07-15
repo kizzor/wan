@@ -1,13 +1,566 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WAN Network — Bridging Construction, Marketing & Automation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy: #0F2340;
+    --navy-deep: #0A1830;
+    --line-cyan: #7FD8E8;
+    --line-cyan-dim: rgba(127,216,232,0.28);
+    --signal: #E8622C;
+    --signal-dim: rgba(232,98,44,0.14);
+    --paper: #EFEDE4;
+    --paper-warm: #E7E3D6;
+    --ink: #12202F;
+    --ink-soft: #4A5A6A;
+    --green: #3FA796;
+    --white: #FBFAF6;
+    --radius: 2px;
+    --max: 1180px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'IBM Plex Sans', sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Space Grotesk', sans-serif; font-weight:600; letter-spacing:-0.01em;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:inherit;}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 32px;}
+  img,svg{display:block; max-width:100%;}
 
+  /* ---------- Blueprint grid background ---------- */
+  .blueprint{
+    background-color:var(--navy);
+    background-image:
+      linear-gradient(var(--line-cyan-dim) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-cyan-dim) 1px, transparent 1px);
+    background-size:44px 44px;
+    position:relative;
+    color:var(--white);
+  }
+  .blueprint::before{
+    content:"";
+    position:absolute; inset:0;
+    background:radial-gradient(ellipse 70% 50% at 50% 0%, rgba(127,216,232,0.10), transparent 60%);
+    pointer-events:none;
+  }
+
+  /* ---------- Top nav ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(15,35,64,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line-cyan-dim);
+  }
+  .nav-inner{
+    max-width:var(--max); margin:0 auto; padding:16px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{display:flex; align-items:center; gap:10px; color:var(--white); text-decoration:none;}
+  .brand-mark{width:26px;height:26px;flex:none;}
+  .brand-name{font-family:'Space Grotesk'; font-weight:600; font-size:17px; letter-spacing:0.02em;}
+  .nav-links{display:flex; gap:28px; font-size:13.5px;}
+  .nav-links a{text-decoration:none; color:rgba(251,250,246,0.75); letter-spacing:0.02em;}
+  .nav-links a:hover{color:var(--line-cyan);}
+  .nav-cta{
+    font-family:'IBM Plex Mono'; font-size:12.5px; letter-spacing:0.03em;
+    border:1px solid var(--line-cyan-dim); color:var(--line-cyan);
+    padding:8px 14px; text-decoration:none; white-space:nowrap;
+  }
+  .nav-cta:hover{background:rgba(127,216,232,0.08);}
+  @media (max-width:860px){ .nav-links{display:none;} }
+
+  /* ---------- Hero ---------- */
+  .hero{padding:96px 0 88px; overflow:hidden;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono'; font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--line-cyan); border:1px solid var(--line-cyan-dim); padding:6px 12px;
+    margin-bottom:28px;
+  }
+  .eyebrow::before{content:""; width:6px;height:6px; background:var(--line-cyan); border-radius:50%;}
+  .hero h1{
+    font-size:clamp(34px, 5.4vw, 62px); line-height:1.06; max-width:780px; color:var(--white);
+  }
+  .hero h1 em{font-style:normal; color:var(--line-cyan);}
+  .hero p.lead{
+    max-width:560px; margin-top:22px; font-size:17px; color:rgba(251,250,246,0.72);
+  }
+  .hero-ctas{display:flex; gap:14px; margin-top:34px; flex-wrap:wrap;}
+  .btn{
+    font-family:'IBM Plex Mono'; font-size:13.5px; letter-spacing:0.02em;
+    padding:13px 22px; text-decoration:none; display:inline-block; border-radius:var(--radius);
+  }
+  .btn-primary{background:var(--signal); color:var(--white);}
+  .btn-primary:hover{background:#d1551f;}
+  .btn-ghost{border:1px solid var(--line-cyan-dim); color:var(--white);}
+  .btn-ghost:hover{background:rgba(127,216,232,0.08);}
+
+  /* Schematic diagram */
+  .schematic{margin-top:72px;}
+  .schematic svg{width:100%; height:auto;}
+  .schematic-caption{
+    font-family:'IBM Plex Mono'; font-size:11.5px; color:rgba(251,250,246,0.45);
+    margin-top:10px; letter-spacing:0.04em;
+  }
+
+  /* ---------- Section shell ---------- */
+  section{padding:88px 0;}
+  .section-head{max-width:640px; margin-bottom:52px;}
+  .section-tag{
+    font-family:'IBM Plex Mono'; font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--signal); margin-bottom:14px; display:block;
+  }
+  .blueprint .section-tag{color:var(--line-cyan);}
+  .section-head h2{font-size:clamp(26px,3.4vw,38px); line-height:1.15;}
+  .section-head p{margin-top:14px; color:var(--ink-soft); font-size:15.5px; max-width:560px;}
+  .blueprint .section-head p{color:rgba(251,250,246,0.65);}
+
+  /* ---------- Pillars (3 companies) ---------- */
+  .pillars{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:rgba(18,32,47,0.12); border:1px solid rgba(18,32,47,0.12);
+  }
+  .pillar{background:var(--paper); padding:36px 30px;}
+  .pillar-idx{font-family:'IBM Plex Mono'; font-size:12px; color:var(--signal); letter-spacing:0.06em;}
+  .pillar h3{font-size:21px; margin-top:14px;}
+  .pillar .loc{
+    font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--ink-soft);
+    margin-top:6px; letter-spacing:0.03em;
+  }
+  .pillar p{margin-top:16px; font-size:14.5px; color:var(--ink-soft);}
+  .pillar .tag-row{margin-top:18px; display:flex; gap:8px; flex-wrap:wrap;}
+  .pillar .tag{
+    font-family:'IBM Plex Mono'; font-size:11px; padding:4px 9px;
+    border:1px solid rgba(18,32,47,0.18); color:var(--ink-soft);
+  }
+  @media (max-width:860px){ .pillars{grid-template-columns:1fr;} }
+
+  /* ---------- Token stats ---------- */
+  .token-grid{display:grid; grid-template-columns:1.1fr 1fr; gap:56px; align-items:start;}
+  @media (max-width:900px){ .token-grid{grid-template-columns:1fr;} }
+  .stat-list{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(251,250,246,0.14); border:1px solid rgba(251,250,246,0.14); margin-top:8px;}
+  .stat{background:var(--navy); padding:22px 20px;}
+  .stat .num{font-family:'IBM Plex Mono'; font-size:22px; color:var(--line-cyan);}
+  .stat .lbl{font-size:12px; color:rgba(251,250,246,0.55); margin-top:6px; letter-spacing:0.02em;}
+  .alloc{margin-top:26px;}
+  .alloc-row{display:flex; align-items:center; gap:14px; margin-bottom:12px; font-family:'IBM Plex Mono'; font-size:12.5px;}
+  .alloc-bar-track{flex:1; height:8px; background:rgba(251,250,246,0.10); position:relative;}
+  .alloc-bar-fill{height:100%; background:var(--line-cyan);}
+  .alloc-pct{width:44px; text-align:right; color:var(--line-cyan);}
+  .alloc-name{width:190px; color:rgba(251,250,246,0.75); flex:none;}
+  @media (max-width:560px){ .alloc-name{width:120px; font-size:11px;} }
+
+  /* utility list */
+  .util-list{list-style:none; margin-top:22px;}
+  .util-list li{
+    display:flex; gap:14px; padding:14px 0; border-top:1px solid rgba(251,250,246,0.10); font-size:14.5px; color:rgba(251,250,246,0.75);
+  }
+  .util-list li:last-child{border-bottom:1px solid rgba(251,250,246,0.10);}
+  .util-list .k{font-family:'IBM Plex Mono'; color:var(--signal); flex:none; width:26px;}
+
+  /* ---------- Staking ---------- */
+  .stake-cols{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:10px;}
+  @media (max-width:860px){ .stake-cols{grid-template-columns:1fr;} }
+  .stake-card{border:1px solid rgba(18,32,47,0.16); padding:28px 24px; background:var(--white);}
+  .stake-card .tier{font-family:'IBM Plex Mono'; font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--signal);}
+  .stake-card h4{font-size:19px; margin-top:10px;}
+  .stake-card .apy{font-family:'IBM Plex Mono'; font-size:26px; margin-top:14px; color:var(--navy);}
+  .stake-card p{margin-top:12px; font-size:13.5px; color:var(--ink-soft);}
+  .flow-note{
+    margin-top:40px; padding:22px 24px; background:var(--paper-warm); border-left:3px solid var(--signal);
+    font-size:14px; color:var(--ink-soft); max-width:760px;
+  }
+  .flow-note strong{color:var(--ink);}
+
+  /* ---------- Roadmap ---------- */
+  .rail{position:relative; margin-top:20px; padding-left:34px; border-left:2px solid rgba(251,250,246,0.18);}
+  .phase{position:relative; padding-bottom:52px;}
+  .phase:last-child{padding-bottom:0;}
+  .phase::before{
+    content:""; position:absolute; left:-40px; top:2px; width:12px; height:12px;
+    background:var(--navy); border:2px solid var(--line-cyan); border-radius:50%;
+  }
+  .phase .when{font-family:'IBM Plex Mono'; font-size:12px; color:var(--line-cyan); letter-spacing:0.06em;}
+  .phase h4{font-size:20px; margin-top:8px; color:var(--white);}
+  .phase ul{margin-top:12px; padding-left:18px; color:rgba(251,250,246,0.68); font-size:14.5px;}
+  .phase ul li{margin-bottom:6px;}
+
+  /* ---------- Trust ---------- */
+  .trust-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:rgba(18,32,47,0.12); border:1px solid rgba(18,32,47,0.12); margin-top:8px;}
+  @media (max-width:760px){ .trust-grid{grid-template-columns:1fr;} }
+  .trust-item{background:var(--paper); padding:28px 26px;}
+  .trust-item h4{font-size:16.5px; display:flex; align-items:center; gap:10px;}
+  .trust-item h4::before{content:""; width:8px; height:8px; background:var(--green); flex:none;}
+  .trust-item p{margin-top:10px; font-size:14px; color:var(--ink-soft);}
+  .disclaimer{
+    margin-top:36px; padding:24px 26px; background:var(--white); border:1px solid rgba(18,32,47,0.14);
+    font-size:13px; color:var(--ink-soft); line-height:1.65;
+  }
+  .disclaimer strong{color:var(--ink);}
+
+  /* ---------- Turbolucent closing segment ---------- */
+  .turbolucent{
+    background:var(--navy-deep); color:var(--white); position:relative; overflow:hidden;
+    border-top:1px solid var(--line-cyan-dim);
+  }
+  .tl-inner{
+    display:grid; grid-template-columns:0.9fr 1.1fr; gap:60px; align-items:center;
+  }
+  @media (max-width:900px){ .tl-inner{grid-template-columns:1fr; gap:36px;} }
+  .tl-eyebrow{font-family:'IBM Plex Mono'; font-size:12px; color:var(--signal); letter-spacing:0.12em; text-transform:uppercase;}
+  .turbolucent h2{font-size:clamp(26px,3.6vw,40px); margin-top:14px; color:var(--white);}
+  .turbolucent p.lead{margin-top:16px; color:rgba(251,250,246,0.7); font-size:15.5px; max-width:480px;}
+  .tl-points{list-style:none; margin-top:26px;}
+  .tl-points li{display:flex; gap:12px; padding:12px 0; border-top:1px solid rgba(251,250,246,0.10); font-size:14px; color:rgba(251,250,246,0.78);}
+  .tl-points .k{font-family:'IBM Plex Mono'; color:var(--line-cyan); flex:none;}
+  .tl-panel{
+    border:1px solid var(--line-cyan-dim); padding:32px; background:rgba(127,216,232,0.04);
+  }
+  .tl-panel .tag{font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--line-cyan); letter-spacing:0.08em;}
+  .tl-panel h3{font-size:22px; margin-top:12px;}
+  .tl-panel-list{margin-top:18px;}
+  .tl-panel-list div{
+    display:flex; justify-content:space-between; padding:11px 0; border-top:1px solid rgba(251,250,246,0.10);
+    font-family:'IBM Plex Mono'; font-size:12.5px; color:rgba(251,250,246,0.72);
+  }
+  .tl-panel .cta{margin-top:24px; display:flex; gap:12px; flex-wrap:wrap;}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--navy-deep); color:rgba(251,250,246,0.5); padding:40px 0; border-top:1px solid rgba(251,250,246,0.08);}
+  .foot-inner{display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; font-size:12.5px;}
+  footer a{color:rgba(251,250,246,0.6); text-decoration:none;}
+  footer a:hover{color:var(--line-cyan);}
+
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; transition:none;} }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <svg class="brand-mark" viewBox="0 0 26 26" fill="none"><path d="M2 20L9 6L13 14L17 6L24 20" stroke="#7FD8E8" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      <span class="brand-name">WAN NETWORK</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#network">Network</a>
+      <a href="#token">$WAN Token</a>
+      <a href="#staking">Staking</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#trust">Trust</a>
+      <a href="#turbolucent">Turbolucent</a>
+    </nav>
+    <a class="nav-cta" href="#token">View Litepaper →</a>
+  </div>
+</header>
+
+<section class="hero blueprint" id="top">
+  <div class="wrap">
+    <span class="eyebrow">Singapore · Multi-industry · Solana</span>
+    <h1>Three industries, <em>one rail.</em><br>Built, marketed, and automated on-chain.</h1>
+    <p class="lead">WAN Network bridges three operating businesses — construction, digital marketing, and automation &amp; AI — under a shared token and treasury, so real-world growth in each is funded and tracked transparently on Solana.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="#token">Read the token model</a>
+      <a class="btn btn-ghost" href="#roadmap">See the roadmap</a>
+    </div>
+
+    <div class="schematic">
+      <svg viewBox="0 0 1120 260" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#7FD8E8" stroke-opacity="0.55" stroke-width="1.4" fill="none">
+          <line x1="140" y1="60" x2="560" y2="150"/>
+          <line x1="560" y1="60" x2="560" y2="150"/>
+          <line x1="980" y1="60" x2="560" y2="150"/>
+          <line x1="560" y1="150" x2="560" y2="220"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="11" fill="#7FD8E8" opacity="0.85">
+          <text x="80" y="45">01 — CONSTRUCTION</text>
+          <text x="500" y="45">02 — DIGITAL MARKETING</text>
+          <text x="900" y="45">03 — AUTOMATION / AI</text>
+        </g>
+        <g>
+          <circle cx="140" cy="60" r="5" fill="#0F2340" stroke="#E8622C" stroke-width="2"/>
+          <circle cx="560" cy="60" r="5" fill="#0F2340" stroke="#E8622C" stroke-width="2"/>
+          <circle cx="980" cy="60" r="5" fill="#0F2340" stroke="#E8622C" stroke-width="2"/>
+        </g>
+        <g>
+          <rect x="480" y="130" width="160" height="40" fill="#0F2340" stroke="#7FD8E8" stroke-width="1.4"/>
+          <text x="560" y="154" font-family="IBM Plex Mono" font-size="12" fill="#FBFAF6" text-anchor="middle">WAN NETWORK</text>
+        </g>
+        <g>
+          <rect x="490" y="220" width="140" height="36" fill="none" stroke="#E8622C" stroke-width="1.4" stroke-dasharray="4 3"/>
+          <text x="560" y="243" font-family="IBM Plex Mono" font-size="11.5" fill="#E8622C" text-anchor="middle">$WAN · SOLANA</text>
+        </g>
+      </svg>
+      <div class="schematic-caption">FIG. 01 — Convergence of operating businesses into a shared token &amp; treasury layer</div>
+    </div>
+  </div>
+</section>
+
+<section id="network">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">The Network</span>
+      <h2>Three operating businesses. One shared ledger.</h2>
+      <p>Each company keeps running its own business independently. WAN Network exists to give them a common funding, incentive, and reporting layer on Solana.</p>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar reveal">
+        <div class="pillar-idx">01 / CONSTRUCTION</div>
+        <h3>Wan Constructions</h3>
+        <div class="loc">Singapore</div>
+        <p>Delivers residential and commercial construction projects. Brings the network real, physical assets and project-financing demand that the token treasury can fund.</p>
+        <div class="tag-row"><span class="tag">Project financing</span><span class="tag">Physical assets</span></div>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-idx">02 / DIGITAL MARKETING</div>
+        <h3>Way Force Digital</h3>
+        <div class="loc">Singapore</div>
+        <p>Runs performance marketing and brand campaigns. Grows the network's reach and can accept $WAN for retained services, driving real token utility.</p>
+        <div class="tag-row"><span class="tag">Growth &amp; brand</span><span class="tag">Token utility</span></div>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-idx">03 / AUTOMATION &amp; AI</div>
+        <h3>Turbolucent</h3>
+        <div class="loc">Technology &amp; Infrastructure Partner</div>
+        <p>Independent tech partner building and operating the blockchain infrastructure, agentic-AI automations, and smart-contract systems for the whole network.</p>
+        <div class="tag-row"><span class="tag">Solana engineering</span><span class="tag">Agentic AI</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blueprint" id="token">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">The Token</span>
+      <h2>$WAN — a fixed-supply utility token on Solana</h2>
+      <p>Deployed as an SPL token, with initial liquidity provisioned on Raydium. Supply is fixed at genesis — no further minting.</p>
+    </div>
+
+    <div class="token-grid">
+      <div class="reveal">
+        <div class="stat-list">
+          <div class="stat"><div class="num">1,000,000,000</div><div class="lbl">Total supply (fixed)</div></div>
+          <div class="stat"><div class="num">SPL</div><div class="lbl">Token standard</div></div>
+          <div class="stat"><div class="num">Raydium</div><div class="lbl">Primary DEX listing</div></div>
+          <div class="stat"><div class="num">0%</div><div class="lbl">Further minting</div></div>
+        </div>
+
+        <ul class="util-list">
+          <li><span class="k">01</span>Payment for Way Force Digital retained marketing services</li>
+          <li><span class="k">02</span>Staking to direct rewards toward the Development Treasury</li>
+          <li><span class="k">03</span>Governance weighting on treasury spend proposals</li>
+          <li><span class="k">04</span>Priority access to Wan Constructions project co-financing rounds</li>
+        </ul>
+      </div>
+
+      <div class="reveal">
+        <div class="alloc">
+          <div class="alloc-row"><div class="alloc-name">Public liquidity (Raydium)</div><div class="alloc-bar-track"><div class="alloc-bar-fill" style="width:35%"></div></div><div class="alloc-pct">35%</div></div>
+          <div class="alloc-row"><div class="alloc-name">Development treasury</div><div class="alloc-bar-track"><div class="alloc-bar-fill" style="width:20%"></div></div><div class="alloc-pct">20%</div></div>
+          <div class="alloc-row"><div class="alloc-name">Team &amp; founders (vested)</div><div class="alloc-bar-track"><div class="alloc-bar-fill" style="width:15%"></div></div><div class="alloc-pct">15%</div></div>
+          <div class="alloc-row"><div class="alloc-name">Partner incentives</div><div class="alloc-bar-track"><div class="alloc-bar-fill" style="width:15%"></div></div><div class="alloc-pct">15%</div></div>
+          <div class="alloc-row"><div class="alloc-name">Community &amp; airdrop</div><div class="alloc-bar-track"><div class="alloc-bar-fill" style="width:10%"></div></div><div class="alloc-pct">10%</div></div>
+          <div class="alloc-row"><div class="alloc-name">Advisors &amp; compliance</div><div class="alloc-bar-track"><div class="alloc-bar-fill" style="width:5%"></div></div><div class="alloc-pct">5%</div></div>
+        </div>
+        <div class="schematic-caption" style="margin-top:18px;">FIG. 02 — Genesis allocation of 1,000,000,000 $WAN · team allocation vests linearly over 24 months with a 6-month cliff</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="staking">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Staking</span>
+      <h2>Staking funds development — it isn't a yield promise</h2>
+      <p>When you stake $WAN, your tokens are locked into the staking contract. A portion of protocol trading fees plus the Development Treasury allocation are distributed to stakers as rewards; the rest funds engineering, audits, and operations across the three businesses.</p>
+    </div>
+
+    <div class="stake-cols">
+      <div class="stake-card reveal">
+        <div class="tier">Flexible</div>
+        <h4>No lock-up</h4>
+        <div class="apy">Base rate</div>
+        <p>Unstake anytime. Lowest reward weighting, funded purely from protocol fee share. Best for liquidity you may need back quickly.</p>
+      </div>
+      <div class="stake-card reveal">
+        <div class="tier">90-Day Lock</div>
+        <h4>Standard</h4>
+        <div class="apy">Base + tier bonus</div>
+        <p>Tokens locked 90 days. Adds a treasury-funded bonus on top of the base rate and light voting weight on quarterly spend proposals.</p>
+      </div>
+      <div class="stake-card reveal">
+        <div class="tier">365-Day Lock</div>
+        <h4>Builder tier</h4>
+        <div class="apy">Highest weighting</div>
+        <p>Tokens locked 12 months. Highest reward share and full governance weight — this tier is designed for long-term network participants, not short-term speculation.</p>
+      </div>
+    </div>
+
+    <div class="flow-note reveal">
+      <strong>Where the money actually goes:</strong> staking rewards are paid from (a) a fixed share of Raydium trading-fee revenue and (b) the 20% Development Treasury allocation, released on a public vesting schedule. Staking is a governance and incentive mechanism for funding real development work across Wan Constructions, Way Force Digital, and Turbolucent — it is not a guaranteed-return investment product, and reward rates will be published and updated on-chain, not fixed in marketing copy.
+    </div>
+  </div>
+</section>
+
+<section class="blueprint" id="roadmap">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Execution Plan</span>
+      <h2>Roadmap</h2>
+      <p>Sequenced so the token and its utility exist only after the legal and technical foundation is in place — not before.</p>
+    </div>
+
+    <div class="rail">
+      <div class="phase reveal">
+        <div class="when">PHASE 0 · FOUNDATION — Q3 2026</div>
+        <h4>Legal &amp; technical groundwork</h4>
+        <ul>
+          <li>Incorporate the token-issuing entity and complete jurisdictional legal review for a public token offering</li>
+          <li>Independent smart-contract audit of the SPL token and staking contract</li>
+          <li>Multisig treasury wallet setup with named signers published publicly</li>
+          <li>Publish full litepaper, tokenomics, and this site with verifiable company details</li>
+        </ul>
+      </div>
+      <div class="phase reveal">
+        <div class="when">PHASE 1 · TOKEN GENESIS — Q4 2026</div>
+        <h4>$WAN deployed, liquidity live</h4>
+        <ul>
+          <li>Deploy $WAN as an SPL token with fixed 1,000,000,000 supply</li>
+          <li>Seed initial liquidity pool on Raydium from the public-liquidity allocation</li>
+          <li>Launch staking contract with Flexible, 90-day, and 365-day tiers</li>
+          <li>Open Development Treasury dashboard for public, on-chain spend tracking</li>
+        </ul>
+      </div>
+      <div class="phase reveal">
+        <div class="when">PHASE 2 · NETWORK ACTIVATION — Q1 2027</div>
+        <h4>Real usage across the three businesses</h4>
+        <ul>
+          <li>Way Force Digital begins accepting $WAN for retained marketing contracts</li>
+          <li>First Wan Constructions project opened for treasury co-financing</li>
+          <li>Turbolucent ships first agentic-AI automation tooling for partner operations</li>
+        </ul>
+      </div>
+      <div class="phase reveal">
+        <div class="when">PHASE 3 · EXPANSION — Q2–Q3 2027</div>
+        <h4>Governance &amp; broader access</h4>
+        <ul>
+          <li>Activate on-chain governance for treasury spend proposals</li>
+          <li>Evaluate additional exchange listings based on liquidity depth</li>
+          <li>Open development grants funded by the treasury to outside builders on the network</li>
+        </ul>
+      </div>
+      <div class="phase reveal">
+        <div class="when">PHASE 4 · MATURITY — 2028 and beyond</div>
+        <h4>Self-sustaining treasury</h4>
+        <ul>
+          <li>Treasury increasingly funded by protocol fee share rather than initial allocation</li>
+          <li>Governance fully handed to staked-token holders</li>
+          <li>Explore additional verticals under the same network model</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="trust">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Trust &amp; Transparency</span>
+      <h2>What we'll publish, and what we won't promise</h2>
+      <p>Trust here is built on verifiable, checkable things — not marketing language.</p>
+    </div>
+
+    <div class="trust-grid">
+      <div class="trust-item reveal">
+        <h4>Named team &amp; entity</h4>
+        <p>Full legal entity name, registration number, and named founders/directors will be published here before any public raise — not anonymous or pseudonymous.</p>
+      </div>
+      <div class="trust-item reveal">
+        <h4>Independent contract audit</h4>
+        <p>The $WAN token and staking contracts will be reviewed by an independent auditor, with the report linked publicly, before mainnet liquidity goes live.</p>
+      </div>
+      <div class="trust-item reveal">
+        <h4>Public multisig treasury</h4>
+        <p>Treasury and team wallets are multisig, with addresses published so anyone can verify balances and vesting on-chain in real time.</p>
+      </div>
+      <div class="trust-item reveal">
+        <h4>No guaranteed-return language</h4>
+        <p>We won't advertise fixed APYs, price targets, or "guaranteed" returns anywhere on this site — staking rates are variable and disclosed on-chain.</p>
+      </div>
+    </div>
+
+    <div class="disclaimer reveal">
+      <strong>Important notice.</strong> $WAN is a utility and governance token, not a promise of profit, dividend, or equity in Wan Constructions, Way Force Digital, or Turbolucent. Cryptocurrency assets are volatile and can lose value, including total loss. Because this raise is intended for participants in multiple countries, WAN Network is committed to completing jurisdiction-by-jurisdiction legal review — including securities-law analysis — before any public sale opens, and the token will not be offered or marketed to persons in jurisdictions where such an offering would be unlawful. Nothing on this site is financial, legal, or tax advice; participants should do their own research and consult independent advisors.
+    </div>
+  </div>
+</section>
+
+<section class="turbolucent" id="turbolucent">
+  <div class="wrap">
+    <div class="tl-inner">
+      <div class="reveal">
+        <span class="tl-eyebrow">Technology &amp; Infrastructure Partner</span>
+        <h2>Turbolucent builds the rails WAN Network runs on</h2>
+        <p class="lead">Turbolucent is the independent technology partner behind WAN Network — engineering the Solana infrastructure, smart contracts, and agentic-AI automation that let Wan Constructions and Way Force Digital operate on-chain without becoming blockchain companies themselves.</p>
+        <ul class="tl-points">
+          <li><span class="k">→</span>SPL token &amp; staking contract design, deployment, and audit coordination</li>
+          <li><span class="k">→</span>Raydium liquidity setup and on-chain treasury tooling</li>
+          <li><span class="k">→</span>Agentic-AI automation for partner operations and reporting</li>
+          <li><span class="k">→</span>Ongoing technical support across the WAN Network</li>
+        </ul>
+      </div>
+      <div class="tl-panel reveal">
+        <span class="tag">SOLE TECH PARTNER</span>
+        <h3>Turbolucent</h3>
+        <div class="tl-panel-list">
+          <div><span>Role</span><span>Blockchain &amp; automation partner</span></div>
+          <div><span>Focus</span><span>Solana engineering, agentic AI</span></div>
+          <div><span>Engagement</span><span>Ongoing tech support</span></div>
+          <div><span>Founder</span><span>Solo-led, Singapore-facing</span></div>
+        </div>
+        <div class="cta">
+          <a class="btn btn-primary" href="#">Contact Turbolucent</a>
+          <a class="btn btn-ghost" href="#">View credentials</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div>&copy; 2026 WAN Network. Tech infrastructure by Turbolucent.</div>
+    <div style="display:flex; gap:20px;">
+      <a href="#">Litepaper</a>
+      <a href="#">Contract &amp; audit</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  els.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
