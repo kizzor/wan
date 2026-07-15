@@ -1,0 +1,6 @@
+{
+  "name": "Wan Network",
+  "description": "The official landing page for Wan Network, uniting construction, digital marketing, and web3 systems into a unified global fundraising and development ecosystem.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
